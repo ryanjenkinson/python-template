@@ -1,0 +1,132 @@
+[tool.poetry]
+name = "mypackage"
+version = "0.0.1"
+description = "A short description about mypackage"
+authors = ["Ryan Jenkinson <hello@ryan.eco>"]
+maintainers = ["Ryan Jenkinson <hello@ryan.eco>"]
+license = ""
+repository = "https://github.com/ryanjenkinson/mypackage"
+documentation = "https://github.com/ryanjenkinson/mypackage/tree/main/docs/api/"
+readme = "README.md"
+packages = [
+    { include = "mypackage" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.3.2"
+black = "^23.3.0"
+xdoctest = "^1.1.1"
+poethepoet = "^0.20.0"
+ruff = "^0.0.272"
+pytest = "7.1.1"
+pytest-cov = "^4.1.0"
+mkdocs = "^1.4.3"
+mkdocs-material = "^9.1.15"
+mkdocs-awesome-pages-plugin = "^2.9.1"
+mkdocstrings = {extras = ["python"], version = "^0.22.0"}
+
+[tool.poetry.scripts]
+-c = "poethepoet:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+target-version = ['py310', 'py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # The following are specific to Black, you probably don't want those.
+  | blib2to3
+  | tests/data
+  | profiling
+)/
+'''
+
+[tool.ruff]
+ignore = [
+    "E501", # line too long
+]
+select = [
+    "C9", # mccabe complexity - have simple variable names
+    "E", # pycodestyle - errors
+    "F", # pyflakes
+    "W", # pycodestyle - warnings
+    "D", # pydocstyle
+    "G", # flake8 - logging formatting
+    "A", # flake8 - builtins
+    "PT", # flake8 - pytest style
+    "S", # flake8 - bandit
+    "B", # flake8 - bugbear
+    "ANN", # flake8 - annotations
+    "SIM", # flake8 - simplify
+    "I", # isort
+    "N", # pep8 naming
+    "PD", # pandas-vet
+    "PTH", # use pathlib over os
+]
+target-version = 'py311'
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.ruff.per-file-ignores]
+"tests/*" = [
+  "S101", # Allow assert statements in tests
+  "D100", # Docstring in public module
+  "D103", # Docstring in public function (we shouldnt need to document all tests)
+  "ANN201", # Missing type annotation for public function (we shouldnt need return types for tests)
+]
+"__init__.py" = [
+  "D104", # Missing docstring in public package
+]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = """
+--verbose \
+--maxfail=1 \
+--color=yes \
+--cov=mypackage \
+--cov-fail-under=90 \
+--cov-report term-missing \
+--doctest-modules \
+--cov-config=pyproject.toml"""
+
+[tool.poe]
+envfile = ".env"
+
+[tool.poe.tasks]
+setup-dev = ["install-dev", "pre-commit"]
+install = "poetry install --only main"
+install-dev = "poetry install"
+run = "python -m mypackage"
+test = "pytest"
+pre-commit = "pre-commit run --all-files"
+lint-ruff = "ruff check **/*.py --fix"
+lint-black = "black **/*.py"
+lint = ["lint-ruff", "lint-black"]
+docs = "mkdocs serve --use-directory-urls -f docs/mkdocs.yaml"
+docs-html = "mkdocs build --no-directory-urls -f docs/mkdocs.yaml"
+docs-publish = """mkdocs gh-deploy \
+--config-file docs/mkdocs.yaml \
+--no-directory-urls \
+--remote-branch docs"""
+
+[tool.poe.tasks.docker-build]
+cmd = """
+docker build
+--build-arg BUILDTAG=$build_tag \
+--build-arg BUILDPLATFORM=$build_platform \
+--target $target \
+-t mypackage:$target-$build_tag ."""
+help = "Build a docker image to test the project in an isolated environment"
+args = [
+  { name = "build-tag", default = "3.11-slim" },
+  { name = "build-platform", default = "linux/amd64" },
+  { name = "target", default = "prod" },
+]

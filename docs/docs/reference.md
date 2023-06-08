@@ -1,0 +1,3 @@
+# Reference
+
+::: mypackage.example.divide
