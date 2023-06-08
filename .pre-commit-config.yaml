@@ -46,21 +46,21 @@ repos:
     hooks:
       - id: lint
         name: lint
-        stages: [commit, push]
+        stages: [pre-commit, pre-merge-commit, pre-push, manual]
         language: system
         entry: poe lint
         types: [python]
         pass_filenames: false
       - id: pytest
         name: pytest
-        stages: [commit, push]
+        stages: [pre-commit, manual]
         language: system
         entry: poe test
         types: [python]
         pass_filenames: false
       - id: api-documentation
         name: api-documentation
-        stages: [push]
+        stages: [pre-push, manual]
         language: system
         entry: poe doc-html
         types: [python]
