@@ -1,3 +1,8 @@
+ci:
+  autoupdate_schedule: weekly
+  # Ignore local checks, since pre-commit.ci can't access poe
+  skip: [lint, pytest, api-documentation]
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
@@ -17,7 +22,7 @@ repos:
     - id: mixed-line-ending
     - id: name-tests-test
       args: ["--pytest-test-first"]
-  # The below is taken care of by poe lint
+  # The below is taken care of by poe lint (maybe look into this later and migrate some things from poe - see above)
   # - repo: https://github.com/astral-sh/ruff-pre-commit
   #   # Ruff version.
   #   rev: 'v0.0.271'
