@@ -22,6 +22,6 @@ jobs:
           path: ~/.cache/pre-commit
           key: pre-commit-3|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Check formatting
-        run: poetry run pre-commit run --all-files --show-diff-on-failure
+        run: SKIP=pytest poetry run pre-commit run --all-files --show-diff-on-failure
       - name: Run Pytest
         run: poetry run pytest
