@@ -19,15 +19,15 @@ python = "^3.10"
 pre-commit = "^3.4.0"
 black = "^23.9.1"
 xdoctest = "^1.1.1"
-poethepoet = "^0.24.0"
-ruff = "^0.0.291"
+poethepoet = "^0.24.1"
+ruff = "^0.0.292"
 pytest = "7.4.2"
 pytest-cov = "^4.1.0"
 
 
 [tool.poetry.group.docs.dependencies]
 mkdocs = "^1.5.3"
-mkdocs-material = "^9.4.2"
+mkdocs-material = "^9.4.4"
 mkdocs-awesome-pages-plugin = "^2.9.2"
 mkdocstrings = {extras = ["python"], version = "^0.23.0"}
 
