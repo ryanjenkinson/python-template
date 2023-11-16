@@ -1,4 +1,5 @@
 ci:
+  autoupdate_commit_msg: 'chore(pre-commit): pre-commit.ci autoupdate'
   autoupdate_schedule: weekly
   # Ignore local checks, since pre-commit.ci can't access poe
   skip: [lint, pytest, api-documentation]
