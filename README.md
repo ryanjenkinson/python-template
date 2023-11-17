@@ -7,7 +7,7 @@ By [Ryan Jenkinson](https://ryan.eco)
 - 🌎 Modern example, using Github templates and workflows
 - 🐍 Uses Python 3.11
 - 🛠️ Uses modern tools such as [`poetry`](https://github.com/python-poetry/poetry) for Python virtual environment management and [`poe`](https://github.com/nat-n/poethepoet) as a task runner
-- 🔧 Nice [pre-commit](https://pre-commit.com/) config, using tools such as [`ruff`](https://github.com/astral-sh/ruff) for linting and [`black`](https://github.com/psf/black) for formatting
+- 🔧 Nice [pre-commit](https://pre-commit.com/) config, using tools such as [`ruff`](https://github.com/astral-sh/ruff) for linting and formatting
 - 🤝 Everything is defined in `pyproject.toml`
 - 📝 Documentation built in using [`mkdocs`](https://www.mkdocs.org/), deployed to Github Pages
 
