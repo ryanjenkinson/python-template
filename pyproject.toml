@@ -17,7 +17,6 @@ python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
-black = "^23.11.0"
 xdoctest = "^1.1.2"
 poethepoet = "^0.24.3"
 ruff = "^0.1.5"
@@ -38,19 +37,8 @@ mkdocstrings = {extras = ["python"], version = "^0.23.0"}
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.black]
-target-version = ['py310', 'py311']
-include = '\.pyi?$'
-extend-exclude = '''
-/(
-  # The following are specific to Black, you probably don't want those.
-  | blib2to3
-  | tests/data
-  | profiling
-)/
-'''
-
 [tool.ruff]
+extend-include = ["*.ipynb"]
 ignore = [
     "E501", # line too long
 ]
@@ -110,9 +98,8 @@ install-dev = "poetry install"
 run = "python -m mypackage"
 test = "pytest"
 pre-commit = "pre-commit run --all-files"
-lint-ruff = "ruff check **/*.py --fix"
-lint-black = "black **/*.py"
-lint = ["lint-ruff", "lint-black"]
+lint = "ruff check **/*.py --fix"
+format = "ruff format **/*.py"
 docs = "mkdocs serve --use-directory-urls -f docs/mkdocs.yaml"
 docs-html = "mkdocs build --no-directory-urls -f docs/mkdocs.yaml"
 docs-publish = """mkdocs gh-deploy \
