@@ -1,4 +1,5 @@
 .vscode
+.python-version
 .DS_Store
 .coverage
 # Byte-compiled / optimized / DLL files
