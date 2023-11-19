@@ -11,6 +11,8 @@ By [Ryan Jenkinson](https://ryan.eco)
 - 🤝 Everything is defined in `pyproject.toml`
 - 📝 Documentation built in using [`mkdocs`](https://www.mkdocs.org/), deployed to Github Pages
 
+If you want a similar project template that uses [`poetry`](https://github.com/python-poetry/poetry) instead of `rye`, check out the `poetry` branch.
+
 ## 🚧 Setup
 
 1. You should have Rye installed. I recommend using `brew` (if on a Mac) to install it: `brew install rye`
@@ -26,3 +28,6 @@ In 4 we run the following commands:
 - Installs pre-commit hooks, which you can do manually via `rye run "install:pre-commit"` after a `rye sync`, and checks they pass on all files.
   - This also checks the code is linted, which you can do manually via `rye run lint`
   - and checks the tests pass, which you can do manually via `rye run test`
+
+### Optional: `direnv`
+You can use `direnv` to automatically activate the virtualenv when you `cd` into the directory. Just run `echo 'layout rye' > .envrc` and run `direnv allow` then you're done! At any time, you can activate the virtual environment in `.venv/bin/activate` and run any command you want (`ruff` or `pytest` for example)
