@@ -10,15 +10,7 @@ jobs:
         with:
           python-version: "3.11"
           cache: "pip"
-      - name: Check if requirements.lock files have changed
-        uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            requirements:
-              - 'requirements*.lock'
-      - name: Install dependencies if lockfiles have changed, otherwise use cache
-        if: steps.changes.outputs.requirements == 'true'
+      - name: Install dependencies using pip
         run: pip install -r requirements-dev.lock
       - name: Cache Pre-commit for format checking
         uses: actions/cache@v3
