@@ -5,23 +5,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install Poetry
-        run: pipx install poetry
       - uses: actions/setup-python@v4
         id: setup-python
         with:
           python-version: "3.11"
-          cache: "poetry"
-      - name: Set Poetry Environment
-        run: poetry env use 3.11
-      - name: Install dependencies
-        run: poetry install
+          cache: "pip"
+      - name: Check if requirements.lock files have changed
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            requirements:
+              - 'requirements*.lock'
+      - name: Install dependencies if lockfiles have changed, otherwise use cache
+        if: steps.changes.outputs.requirements == 'true'
+        run: pip install -r requirements-dev.lock
       - name: Cache Pre-commit for format checking
         uses: actions/cache@v3
         with:
           path: ~/.cache/pre-commit
           key: pre-commit-3|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
+      # pre-commit is now in the virtualenv so can run below
       - name: Check formatting
-        run: SKIP=pytest poetry run pre-commit run --all-files --show-diff-on-failure
+        run: SKIP=pytest pre-commit run --all-files --show-diff-on-failure
       - name: Run Pytest
-        run: poetry run pytest
+        run: pytest

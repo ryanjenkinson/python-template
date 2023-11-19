@@ -1,41 +1,52 @@
-[tool.poetry]
+[project]
 name = "mypackage"
 version = "0.0.1"
 description = "A short description about mypackage"
-authors = ["Ryan Jenkinson <hello@ryan.eco>"]
-maintainers = ["Ryan Jenkinson <hello@ryan.eco>"]
-license = ""
-repository = "https://github.com/ryanjenkinson/mypackage"
-documentation = "https://github.com/ryanjenkinson/mypackage/tree/main/docs/api/"
+authors = [
+  {name = "Ryan Jenkinson", email = "hello@ryan.eco" }
+]
+maintainers = [
+  {name = "Ryan Jenkinson", email = "hello@ryan.eco" }
+]
 readme = "README.md"
 packages = [
     { include = "mypackage" },
 ]
+requires-python = ">=3.10, <4.0"
+# Not actually used in this simple project, just want to see how dependencies are managed with dependabot
+dependencies = [
+    "pandas>=2.1.3",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-
-[tool.poetry.group.dev.dependencies]
-pre-commit = "^3.5.0"
-xdoctest = "^1.1.2"
-poethepoet = "^0.24.3"
-ruff = "^0.1.5"
-pytest = "7.4.3"
-pytest-cov = "^4.1.0"
+[project.optional-dependencies]
+# Also not used in this project, just want to see how dependencies are managed with dependabot
+plotting = [
+    "plotly>=5.18.0",
+]
 
 
-[tool.poetry.group.docs.dependencies]
-mkdocs = "^1.5.3"
-mkdocs-material = "^9.4.8"
-mkdocs-awesome-pages-plugin = "^2.9.2"
-mkdocstrings = {extras = ["python"], version = "^0.23.0"}
-
-[tool.poetry.scripts]
--c = "poethepoet:main"
+[tool.rye]
+dev-dependencies = [
+    "pre-commit>=3.5.0",
+    "xdoctest>=1.1.2",
+    "pytest>=7.4.3",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.1.6",
+    "mkdocs>=1.5.3",
+    "mkdocs-material>=9.4.9",
+    "mkdocs-awesome-pages-plugin>=2.9.2",
+    "mkdocstrings[python]>=0.24.0",
+]
+managed = true
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.urls]
+"Repository" = "https://github.com/ryanjenkinson/mypackage"
+"Documentation" = "https://github.com/ryanjenkinson/mypackage/tree/main/docs/api/"
+"Author Website" = "https://ryan.eco"
 
 [tool.ruff]
 extend-include = ["*.ipynb"]
@@ -88,35 +99,21 @@ addopts = """
 --doctest-modules \
 --cov-config=pyproject.toml"""
 
-[tool.poe]
-envfile = ".env"
 
-[tool.poe.tasks]
-setup-dev = ["install-dev", "pre-commit"]
-install = "poetry install --only main"
-install-dev = "poetry install"
+[tool.rye.scripts]
+setup-dev = { chain = ["install:dev", "install:pre-commit"] }
+install = "rye sync --no-dev"
+"install:dev" = "rye sync"
 run = "python -m mypackage"
 test = "pytest"
-pre-commit = "pre-commit run --all-files"
-lint = "ruff check **/*.py --fix"
-format = "ruff format **/*.py"
+"install:pre-commit" = "pre-commit run --all-files"
+lint = "ruff check . --fix"
+format = "ruff format ."
 docs = "mkdocs serve --use-directory-urls -f docs/mkdocs.yaml"
 docs-html = "mkdocs build --no-directory-urls -f docs/mkdocs.yaml"
 docs-publish = """mkdocs gh-deploy \
 --config-file docs/mkdocs.yaml \
 --no-directory-urls \
 --remote-branch docs"""
-
-[tool.poe.tasks.docker-build]
-cmd = """
-docker build
---build-arg BUILDTAG=$build_tag \
---build-arg BUILDPLATFORM=$build_platform \
---target $target \
--t mypackage:$target-$build_tag ."""
-help = "Build a docker image to test the project in an isolated environment"
-args = [
-  { name = "build-tag", default = "3.11-slim" },
-  { name = "build-platform", default = "linux/amd64" },
-  { name = "target", default = "prod" },
-]
+# Rye scripts can't handle a complicated docker build script like below just yet
+# docker-build = { cmd = """docker build --build-arg BUILDTAG=$BUILD_TAG --build-arg BUILDPLATFORM=$BUILD_PLATFORM --target $TARGET -t mypackage:$target-$build_tag .""", env = { BUILD_TAG = "3.11-slim", BUILD_PLATFORM = "linux/amd64", TARGET = "prod"} }
