@@ -1,7 +1,7 @@
 ci:
   autoupdate_commit_msg: 'chore(pre-commit): pre-commit.ci autoupdate'
   autoupdate_schedule: weekly
-  # Ignore local checks, since pre-commit.ci can't access poe
+  # Ignore local checks, since pre-commit.ci can't access rye
   skip: [pytest, api-documentation]
 
 repos:
@@ -38,13 +38,13 @@ repos:
         name: pytest
         stages: [pre-commit, manual]
         language: system
-        entry: poe test
+        entry: rye run test
         types: [python]
         pass_filenames: false
       - id: api-documentation
         name: api-documentation
         stages: [pre-push, manual]
         language: system
-        entry: poe doc-html
+        entry: rye run docs-html
         types: [python]
         pass_filenames: false
