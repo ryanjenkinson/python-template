@@ -12,7 +12,7 @@ readme = "README.md"
 packages = [
     { include = "mypackage" },
 ]
-requires-python = ">=3.10, <4.0"
+requires-python = ">=3.10"
 # Not actually used in this simple project, just want to see how dependencies are managed with dependabot
 dependencies = [
     "pandas>=2.1.3",
