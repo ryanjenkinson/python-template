@@ -29,5 +29,38 @@ In 4 we run the following commands:
   - This also checks the code is linted, which you can do manually via `hatch run dev:lint`
   - and checks the tests pass, which you can do manually via `hatch run dev:test`
 
-### Optional: `direnv`
-You can use `direnv` to automatically activate the virtualenv when you `cd` into the directory. Just run `echo 'layout hatch' > .envrc` and run `direnv allow` then you're done! At any time, you can activate the virtual environment in `.venv/bin/activate` and run any command you want (`ruff` or `pytest` for example)
+<details>
+  <summary>### Optional: `direnv` to automatically activate the virtual environment</summary>
+
+You can use `direnv` to automatically activate the virtualenv when you `cd` into the directory.
+
+Add the following to `~/.config/direnv/direnvrc`:
+
+```bash
+layout_hatch() {
+    PYPROJECT_TOML="${PYPROJECT_TOML:-pyproject.toml}"
+    if [[ ! -f "$PYPROJECT_TOML" ]]; then
+        log_status "No pyproject.toml found. Executing \`hatch new --init\` to create a \`$PYPROJECT_TOML\` first."
+        hatch new --init
+    fi
+
+    export HATCH_ENV="dev" # or whatever environment you want to use normally
+    VIRTUAL_ENV=$(hatch env find)
+
+    if [[ -z $VIRTUAL_ENV || ! -d $VIRTUAL_ENV ]]; then
+        log_status "No virtual environment folder yet. Executing \`hatch env create\` to create it."
+        hatch env create
+    fi
+
+    PATH_add "$VIRTUAL_ENV/bin"
+    export HATCH_ACTIVE=1
+    export VIRTUAL_ENV
+}
+```
+
+
+Then, for any project that uses this template, just run `echo 'layout hatch' > .envrc` and run `direnv allow` then you're done!
+
+At any time, you can activate the virtual environment in `{(hatch env find) || .venv}/bin/activate` and run any command you want (`ruff` or `pytest` for example)
+
+</details>
