@@ -12,7 +12,7 @@ readme = "README.md"
 packages = [
     { include = "mypackage" },
 ]
-requires-python = ">=3.10, <4.0"
+requires-python = ">=3.10"
 # Not actually used in this simple project, just want to see how dependencies are managed with dependabot
 dependencies = [
     "pandas>=2.1.3",
@@ -24,9 +24,33 @@ plotting = [
     "plotly>=5.18.0",
 ]
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.rye]
-dev-dependencies = [
+[project.urls]
+"Repository" = "https://github.com/ryanjenkinson/mypackage"
+"Documentation" = "https://github.com/ryanjenkinson/mypackage/tree/main/docs/api/"
+"Author Website" = "https://ryan.eco"
+
+[tool.hatch.env]
+requires = ["hatch-pip-compile"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["mypackage"]
+
+[tool.hatch.envs.default]
+type = "pip-compile"
+pip-compile-args = ["--no-emit-index-url"]
+lock-filename = "requirements.txt"
+features = ["plotting"]
+
+[tool.hatch.envs.dev]
+path = ".venv"
+type = "pip-compile"
+pip-compile-args = ["--no-emit-index-url"]
+lock-filename = "dev.requirements.txt"
+dependencies = [
     "pre-commit>=3.5.0",
     "xdoctest>=1.1.2",
     "pytest>=7.4.3",
@@ -37,16 +61,34 @@ dev-dependencies = [
     "mkdocs-awesome-pages-plugin>=2.9.2",
     "mkdocstrings[python]>=0.24.0",
 ]
-managed = true
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[tool.hatch.envs.dev.scripts]
+setup = "install-and-run-pre-commit"
+run = "python -m mypackage"
+test = "pytest"
+install-and-run-pre-commit = "pre-commit run --all-files"
+lint = "ruff check . --fix"
+format = "ruff format ."
+docs = "mkdocs serve --use-directory-urls -f docs/mkdocs.yaml"
+docs-html = "mkdocs build --no-directory-urls -f docs/mkdocs.yaml"
+docs-publish = """mkdocs gh-deploy \
+--config-file docs/mkdocs.yaml \
+--no-directory-urls \
+--remote-branch docs"""
+# hatch scripts can't handle a complicated docker build script like below just yet
+# docker-build = { cmd = """docker build --build-arg BUILDTAG=$BUILD_TAG --build-arg BUILDPLATFORM=$BUILD_PLATFORM --target $TARGET -t mypackage:$target-$build_tag .""", env = { BUILD_TAG = "3.11-slim", BUILD_PLATFORM = "linux/amd64", TARGET = "prod"} }
 
-[project.urls]
-"Repository" = "https://github.com/ryanjenkinson/mypackage"
-"Documentation" = "https://github.com/ryanjenkinson/mypackage/tree/main/docs/api/"
-"Author Website" = "https://ryan.eco"
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = """
+--verbose \
+--maxfail=1 \
+--color=yes \
+--cov=mypackage \
+--cov-fail-under=90 \
+--cov-report term-missing \
+--doctest-modules \
+--cov-config=pyproject.toml"""
 
 [tool.ruff]
 extend-include = ["*.ipynb"]
@@ -89,34 +131,3 @@ docstring-code-format = true
 "__init__.py" = [
   "D104", # Missing docstring in public package
 ]
-
-[tool.pytest.ini_options]
-minversion = "6.0"
-addopts = """
---verbose \
---maxfail=1 \
---color=yes \
---cov=mypackage \
---cov-fail-under=90 \
---cov-report term-missing \
---doctest-modules \
---cov-config=pyproject.toml"""
-
-
-[tool.rye.scripts]
-setup-dev = { chain = ["install:dev", "install:pre-commit"] }
-install = "rye sync --no-dev"
-"install:dev" = "rye sync"
-run = "python -m mypackage"
-test = "pytest"
-"install:pre-commit" = "pre-commit run --all-files"
-lint = "ruff check . --fix"
-format = "ruff format ."
-docs = "mkdocs serve --use-directory-urls -f docs/mkdocs.yaml"
-docs-html = "mkdocs build --no-directory-urls -f docs/mkdocs.yaml"
-docs-publish = """mkdocs gh-deploy \
---config-file docs/mkdocs.yaml \
---no-directory-urls \
---remote-branch docs"""
-# Rye scripts can't handle a complicated docker build script like below just yet
-# docker-build = { cmd = """docker build --build-arg BUILDTAG=$BUILD_TAG --build-arg BUILDPLATFORM=$BUILD_PLATFORM --target $TARGET -t mypackage:$target-$build_tag .""", env = { BUILD_TAG = "3.11-slim", BUILD_PLATFORM = "linux/amd64", TARGET = "prod"} }

@@ -11,7 +11,7 @@ jobs:
           python-version: "3.11"
           cache: "pip"
       - name: Install dependencies using pip
-        run: pip install -r requirements/dev.txt
+        run: pip install -r dev.requirements.txt
       - name: Cache Pre-commit for format checking
         uses: actions/cache@v3
         with:
