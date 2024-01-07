@@ -30,7 +30,7 @@ In 4 we run the following commands:
   - and checks the tests pass, which you can do manually via `hatch run dev:test`
 
 <details>
-  <summary>### Optional: `direnv` to automatically activate the virtual environment</summary>
+  <summary><h3>Optional: `direnv` to automatically activate the virtual environment</h3></summary>
 
 You can use `direnv` to automatically activate the virtualenv when you `cd` into the directory.
 
