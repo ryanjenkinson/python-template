@@ -37,7 +37,7 @@ build-backend = "hatchling.build"
 requires = ["hatch-pip-compile"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src"]
+packages = ["mypackage"]
 
 [tool.hatch.envs.default]
 type = "pip-compile"
