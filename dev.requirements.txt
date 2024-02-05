@@ -18,7 +18,7 @@ babel==2.14.0
     # via mkdocs-material
 bracex==2.4
     # via wcmatch
-certifi==2023.11.17
+certifi==2024.2.2
     # via requests
 cfgv==3.4.0
     # via pre-commit
@@ -42,7 +42,7 @@ filelock==3.13.1
     # via virtualenv
 ghp-import==2.1.0
     # via mkdocs
-griffe==0.39.1
+griffe==0.40.0
     # via mkdocstrings-python
 identify==2.5.33
     # via pre-commit
@@ -62,7 +62,7 @@ markdown==3.5.2
     #   mkdocs-material
     #   mkdocstrings
     #   pymdown-extensions
-markupsafe==2.1.4
+markupsafe==2.1.5
     # via
     #   jinja2
     #   mkdocs
@@ -80,7 +80,7 @@ mkdocs-autorefs==0.5.0
     # via mkdocstrings
 mkdocs-awesome-pages-plugin==2.9.2
     # via hatch.envs.dev
-mkdocs-material==9.5.6
+mkdocs-material==9.5.7
     # via hatch.envs.dev
 mkdocs-material-extensions==1.3.1
     # via mkdocs-material
@@ -108,7 +108,7 @@ pandas==2.2.0
     # via hatch.envs.dev
 pathspec==0.12.1
     # via mkdocs
-platformdirs==4.1.0
+platformdirs==4.2.0
     # via
     #   mkdocs
     #   mkdocstrings
@@ -149,7 +149,7 @@ regex==2023.12.25
     # via mkdocs-material
 requests==2.31.0
     # via mkdocs-material
-ruff==0.1.14
+ruff==0.2.0
     # via hatch.envs.dev
 six==1.16.0
     # via python-dateutil
@@ -157,7 +157,7 @@ tenacity==8.2.3
     # via plotly
 tzdata==2023.4
     # via pandas
-urllib3==2.1.0
+urllib3==2.2.0
     # via requests
 virtualenv==20.25.0
     # via pre-commit
@@ -165,7 +165,7 @@ watchdog==3.0.0
     # via mkdocs
 wcmatch==8.5
     # via mkdocs-awesome-pages-plugin
-xdoctest==1.1.2
+xdoctest==1.1.3
     # via hatch.envs.dev
 
 # The following packages are considered to be unsafe in a requirements file:
