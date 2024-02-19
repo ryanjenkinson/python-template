@@ -5,13 +5,13 @@
 # - plotly>=5.18.0
 #
 
-numpy==1.26.3
+numpy==1.26.4
     # via pandas
 packaging==23.2
     # via plotly
 pandas==2.2.0
     # via hatch.envs.default
-plotly==5.18.0
+plotly==5.19.0
     # via hatch.envs.default
 python-dateutil==2.8.2
     # via pandas
@@ -21,5 +21,5 @@ six==1.16.0
     # via python-dateutil
 tenacity==8.2.3
     # via plotly
-tzdata==2023.4
+tzdata==2024.1
     # via pandas

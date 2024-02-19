@@ -95,7 +95,7 @@ natsort==8.4.0
     # via mkdocs-awesome-pages-plugin
 nodeenv==1.8.0
     # via pre-commit
-numpy==1.26.3
+numpy==1.26.4
     # via pandas
 packaging==23.2
     # via
@@ -113,7 +113,7 @@ platformdirs==4.2.0
     #   mkdocs
     #   mkdocstrings
     #   virtualenv
-plotly==5.18.0
+plotly==5.19.0
     # via hatch.envs.dev
 pluggy==1.4.0
     # via pytest
@@ -155,7 +155,7 @@ six==1.16.0
     # via python-dateutil
 tenacity==8.2.3
     # via plotly
-tzdata==2023.4
+tzdata==2024.1
     # via pandas
 urllib3==2.2.0
     # via requests
