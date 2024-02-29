@@ -1,15 +1,19 @@
 site_name: mypackage
-site_url: https://RyanJenkinson.github.io/mypackage
+site_url: https://ryanjenkinson.github.io/mypackage
 site_description: A short description about mypackage
 site_author: Ryan Jenkinson
 site_dir: html
-repo_name: RyanJenkinson/mypackage
-repo_url: https://github.com/RyanJenkinson/mypackage
+repo_name: ryanjenkinson/mypackage
+repo_url: https://github.com/ryanjenkinson/mypackage
 
 plugins:
   - search
   - awesome-pages
-  - mkdocstrings
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [../src]
 
 theme:
   name: material
