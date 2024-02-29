@@ -10,7 +10,7 @@ maintainers = [
 ]
 readme = "README.md"
 packages = [
-    { include = "mypackage" },
+  { include = "src" },
 ]
 requires-python = ">=3.10, <4.0"
 # Not actually used in this simple project, just want to see how dependencies are managed with dependabot
@@ -95,7 +95,7 @@ addopts = """
 --verbose \
 --maxfail=1 \
 --color=yes \
---cov=mypackage \
+--cov=src \
 --cov-fail-under=90 \
 --cov-report term-missing \
 --doctest-modules \
