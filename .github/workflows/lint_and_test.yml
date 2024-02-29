@@ -10,8 +10,12 @@ jobs:
         with:
           python-version: "3.11"
           cache: "pip"
-      - name: Install dependencies using pip
-        run: pip install -r dev.requirements.txt
+      - uses: yezz123/setup-uv@v3
+        id: setup-uv
+        with:
+          uv-venv: "ci"
+      - name: Install dependencies using uv pip
+        run: uv pip install -r requirements-dev.lock
       - name: Cache Pre-commit for format checking
         uses: actions/cache@v4
         with:
