@@ -31,4 +31,4 @@ In 4 we run the following commands:
 
 ### Optional: `direnv`
 
-You can use `direnv` to automatically activate the virtualenv when you `cd` into the directory. Just run `echo 'layout rye' > .envrc` and run `direnv allow` then you're done! At any time, you can activate the virtual environment in `.venv/bin/activate` and run any command you want (`ruff` or `pytest` for example)
+You can use `direnv` to automatically activate the virtualenv when you `cd` into the directory. Just follow [these instructions](https://github.com/direnv/direnv/wiki/Python#rye) run `echo 'layout rye' > .envrc` and run `direnv allow` then you're done! At any time, you can activate the virtual environment in `.venv/bin/activate` and run any command you want (`ruff` or `pytest` for example)
