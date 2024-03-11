@@ -10,7 +10,7 @@ jobs:
         with:
           python-version: "3.11"
           cache: "pip"
-      - uses: yezz123/setup-uv@v3
+      - uses: yezz123/setup-uv@v4
         id: setup-uv
         with:
           uv-venv: "ci"
