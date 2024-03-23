@@ -15,7 +15,7 @@ jobs:
         with:
           uv-venv: "ci"
       - name: Install dependencies using uv pip
-        run: uv pip install -r requirements-dev.lock
+        run: uv pip install -r dev.requirements.txt
       - name: Cache Pre-commit for format checking
         uses: actions/cache@v4
         with:
