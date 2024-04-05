@@ -11,24 +11,22 @@ WORKDIR /home/user/app
 COPY --chown=user  . .
 
 ENV PATH=$PATH:/home/user/.local/bin
-
-RUN pip install --no-cache poetry poethepoet
-RUN poetry config --no-cache
-RUN poetry install --no-root
-
-RUN poetry install
-RUN poetry build --format=wheel
-RUN poetry export --only main -f requirements.txt --without-hashes --output requirements.txt
+# Install uv
+ENV VIRTUAL_ENV=/usr/local
+ADD --chmod=755 https://astral.sh/uv/install.sh /install.sh
+RUN /install.sh && rm /install.sh
+# Install Python dependencies
+COPY requirements.txt /requirements.txt
+RUN /root/.cargo/bin/uv pip install --no-cache -r dev.requirements.txt
 
 FROM dependencies as test
-RUN poe lint
-CMD ["poe", "-q", "test"]
+CMD ["pytest"]
 
 FROM dependencies as prod
 
 COPY --chown=user:user --from=dependencies /home/user/app/requirements.txt requirements.txt
-COPY --chown=user:user --from=dependencies /home/user/app/dist dist
 
-RUN pip install --no-cache -r requirements.txt dist/*.whl --user
+# TODO: Do we also need the distribution etc?
+RUN /root/.cargo/bin/uv pip install --no-cache -r requirements.txt
 
-ENTRYPOINT ["poe", "run"]
+ENTRYPOINT ["python", "-m", "mypackage"]
