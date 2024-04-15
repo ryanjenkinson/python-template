@@ -8,7 +8,7 @@
 #   with-sources: false
 
 -e file:.
-pandas==2.2.1
+pandas==2.2.2
     # via mypackage
 python-dateutil==2.9.0.post0
     # via pandas
