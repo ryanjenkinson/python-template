@@ -32,7 +32,7 @@ filelock==3.14.0
     # via virtualenv
 ghp-import==2.1.0
     # via mkdocs
-griffe==0.45.2
+griffe==0.45.3
     # via mkdocstrings-python
 identify==2.5.36
     # via pre-commit
@@ -65,7 +65,7 @@ mkdocs==1.6.0
 mkdocs-autorefs==1.0.1
     # via mkdocstrings
 mkdocs-awesome-pages-plugin==2.9.2
-mkdocs-material==9.5.25
+mkdocs-material==9.5.26
 mkdocs-material-extensions==1.3.1
     # via mkdocs-material
 mkdocstrings==0.25.1
@@ -74,9 +74,9 @@ mkdocstrings-python==1.10.3
     # via mkdocstrings
 natsort==8.4.0
     # via mkdocs-awesome-pages-plugin
-nodeenv==1.9.0
+nodeenv==1.9.1
     # via pre-commit
-packaging==24.0
+packaging==24.1
     # via mkdocs
     # via pytest
 paginate==0.5.6
@@ -97,7 +97,7 @@ pygments==2.18.0
 pymdown-extensions==10.8.1
     # via mkdocs-material
     # via mkdocstrings
-pytest==8.2.1
+pytest==8.2.2
     # via pytest-cov
 pytest-cov==5.0.0
 python-dateutil==2.9.0.post0
@@ -116,7 +116,7 @@ regex==2024.5.15
     # via mkdocs-material
 requests==2.32.3
     # via mkdocs-material
-ruff==0.4.7
+ruff==0.4.8
 setuptools==70.0.0
     # via nodeenv
 six==1.16.0
@@ -131,4 +131,4 @@ watchdog==4.0.1
     # via mkdocs
 wcmatch==8.5.2
     # via mkdocs-awesome-pages-plugin
-xdoctest==1.1.4
+xdoctest==1.1.5
