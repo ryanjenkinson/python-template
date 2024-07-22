@@ -32,7 +32,7 @@ filelock==3.15.4
     # via virtualenv
 ghp-import==2.1.0
     # via mkdocs
-griffe==0.47.0
+griffe==0.48.0
     # via mkdocstrings-python
 identify==2.6.0
     # via pre-commit
@@ -97,7 +97,7 @@ pygments==2.18.0
 pymdown-extensions==10.8.1
     # via mkdocs-material
     # via mkdocstrings
-pytest==8.2.2
+pytest==8.3.1
     # via pytest-cov
 pytest-cov==5.0.0
 python-dateutil==2.9.0.post0
@@ -116,8 +116,8 @@ regex==2024.5.15
     # via mkdocs-material
 requests==2.32.3
     # via mkdocs-material
-ruff==0.5.2
-setuptools==70.3.0
+ruff==0.5.4
+setuptools==71.1.0
     # via nodeenv
 six==1.16.0
     # via python-dateutil
