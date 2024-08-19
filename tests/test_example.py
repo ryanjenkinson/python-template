@@ -1,4 +1,5 @@
 import pytest
+
 from mypackage.example import divide
 
 
