@@ -22,19 +22,22 @@ plotting = [
     "plotly>=5.18.0",
 ]
 
-[tool.rye]
-managed = true
+[tool.uv]
 dev-dependencies = [
     "pre-commit>=3.5.0",
     "xdoctest>=1.1.2",
     "pytest>=7.4.3",
     "pytest-cov>=4.1.0",
-    "ruff>=0.2",
+    "ruff>=0.6",
     "mkdocs>=1.5.3",
     "mkdocs-material>=9.4.9",
     "mkdocs-awesome-pages-plugin>=2.9.2",
     "mkdocstrings[python]>=0.24.0",
 ]
+
+[tool.uv.pip]
+generate-hashes = true
+extra = ["plotting"]
 
 [build-system]
 requires = ["hatchling"]
@@ -46,7 +49,6 @@ build-backend = "hatchling.build"
 "Author Website" = "https://ryan.eco"
 
 [tool.ruff]
-extend-include = ["*.ipynb"]
 target-version = 'py311'
 
 [tool.ruff.format]
@@ -99,21 +101,18 @@ addopts = """
 --doctest-modules \
 --cov-config=pyproject.toml"""
 
-
-[tool.rye.scripts]
-setup-dev = { chain = ["install:dev", "install:pre-commit"] }
-install = "rye sync --no-dev"
-"install:dev" = "rye sync"
-run = "python -m mypackage"
-test = "pytest"
-"install:pre-commit" = "pre-commit run --all-files"
-lint = "ruff check . --fix"
-format = "ruff format ."
-docs = "mkdocs serve --use-directory-urls -f docs/mkdocs.yaml"
-docs-html = "mkdocs build --no-directory-urls -f docs/mkdocs.yaml"
-docs-publish = """mkdocs gh-deploy \
---config-file docs/mkdocs.yaml \
---no-directory-urls \
---remote-branch docs"""
-# Rye scripts can't handle a complicated docker build script like below just yet
+# uv cannot yet specify run commands in the pyproject.toml
+# [tool.uv.run]
+# setup = "pre-commit run --all-files"
+# main = "python -m mypackage"
+# test = "pytest"
+# lint = "ruff check . --fix"
+# format = "ruff format ."
+# docs = "mkdocs serve --use-directory-urls -f docs/mkdocs.yaml"
+# docs-html = "mkdocs build --no-directory-urls -f docs/mkdocs.yaml"
+# docs-publish = """mkdocs gh-deploy \
+# --config-file docs/mkdocs.yaml \
+# --no-directory-urls \
+# --remote-branch docs"""
+# uv scripts can't handle a complicated docker build script like below just yet
 # docker-build = { cmd = """docker build --build-arg BUILDTAG=$BUILD_TAG --build-arg BUILDPLATFORM=$BUILD_PLATFORM --target $TARGET -t mypackage:$target-$build_tag .""", env = { BUILD_TAG = "3.11-slim", BUILD_PLATFORM = "linux/amd64", TARGET = "prod"} }

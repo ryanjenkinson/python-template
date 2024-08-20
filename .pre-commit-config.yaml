@@ -1,8 +1,8 @@
 ci:
   autoupdate_commit_msg: 'chore(pre-commit): pre-commit.ci autoupdate'
   autoupdate_schedule: weekly
-  # Ignore local checks, since pre-commit.ci can't access rye
-  skip: [pytest, api-documentation]
+  # Ignore local checks and pip compile, since pre-commit.ci can't access uv. ci will check this anyway
+  skip: [pytest, pip-compile]
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -23,6 +23,15 @@ repos:
     - id: mixed-line-ending
     - id: name-tests-test
       args: ["--pytest-test-first"]
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    # uv version.
+    rev: 0.3.0
+    hooks:
+      # Compile requirements
+      - id: pip-compile
+        name: pip-compile generate requirements.txt
+        args: [pyproject.toml, -o, requirements.txt]
+        files: pyproject.toml|uv.lock
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
     rev: v0.6.1
@@ -38,13 +47,6 @@ repos:
         name: pytest
         stages: [pre-commit, manual]
         language: system
-        entry: rye run test
-        types: [python]
-        pass_filenames: false
-      - id: api-documentation
-        name: api-documentation
-        stages: [pre-push, manual]
-        language: system
-        entry: rye run docs-html
+        entry: uv run pytest
         types: [python]
         pass_filenames: false
