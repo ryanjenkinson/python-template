@@ -1,8 +1,8 @@
 ci:
   autoupdate_commit_msg: 'chore(pre-commit): pre-commit.ci autoupdate'
   autoupdate_schedule: weekly
-  # Ignore local checks, since pre-commit.ci can't access rye
-  skip: [pytest, api-documentation]
+  # Ignore local checks and pip compile, since pre-commit.ci can't access uv. ci will check this anyway
+  skip: [pytest, pip-compile]
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
