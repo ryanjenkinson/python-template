@@ -9,7 +9,7 @@ jobs:
       UV_CACHE_DIR: /tmp/.uv-cache
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up uv
         # Install a specific uv version using the installer
         run: curl -LsSf https://astral.sh/uv/0.3.0/install.sh | sh
