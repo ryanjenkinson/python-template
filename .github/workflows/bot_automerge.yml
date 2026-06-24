@@ -8,7 +8,7 @@ permissions:
 jobs:
   dependabot:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    if: ${{ github.pull_request.user.login == 'dependabot[bot]' }}
     steps:
       - name: Dependabot metadata
         id: metadata
@@ -23,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   precommit:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'pre-commit-ci[bot]' }}
+    if: ${{ github.pull_request.user.login == 'pre-commit-ci[bot]' }}
     steps:
       - name: Enable auto-merge for pre-commit-ci PRs
         run: gh pr merge --auto --merge "$PR_URL"
